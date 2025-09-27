@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html 
+lang="en"
+th:fragment="parent(content, title, script)"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">Base Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" />
+    <link data-th-href="@{'/css/output.css'}" rel="stylesheet">
+</head>
+<body>
+    <!-- common header -->
+     <ul class="p-4">
+        <li>
+            <a data-th-href="@{'/home'}">Home</a>
+        </li>
+         <li>
+            <a data-th-href="@{'/about'}">About</a>
+        </li>
+        <li>
+            <a data-th-href="@{'/services'}">Services</a>
+        </li>
+     </ul>
+
+<!-- main content -->
+
+<div class="p-4 bg-amber-300">
+    <section data-th-replace="${content}"></section>
+</div>
+
+<!-- common footer -->
+ <footer class="p-4">
+    Footer : Contact to Sanya Singh
+ </footer>
+<!-- flow bite content -->
+ <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+ <th:block data-th-replace="${script}"></th:block>
+</body>
+</html>
+
+
+
+
+
+
+
+
+<!--
+PRACTICE
+<div class="parent-fragment" th:fragment="parent(x,content)">
+    <h1>This is parent fragment</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum odio quae suscipit sed eos nobis omnis accusamus? Nemo, ad odit?</p>
+    <h2>This parent fragment is in <span th:text="${x}"></span> Page</h2>
+    <div th:replace="${content}"></div>
+
+</div>
+
+<div th:fragment="test(content)">
+<h1>this is testing fragment</h1>
+<div th:replace="${content}"></div>
+</div>
+-->

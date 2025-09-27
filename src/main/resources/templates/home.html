@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link data-th-href="@{'/css/output.css'}" rel="stylesheet">
+   
+</head>
+<body>
+    <div class="container bg-gray-200 w-1/2 p-4 flex flex-col items-center mx-auto mt-4">
+        <h1 class="text-2xl font-bold"   data-th-text="${name}">
+            Welcome to the home page
+        </h1>
+        <p class="text-xl text-gray-700"> 
+            Company : <span data-th-text="${company}"></span>
+        </p>
+        <p> Role : <span th:text="${role}"></span></p>
+        <!--data-th-text : is more html friendly--> 
+        <a th:href="${linkedin}">Click here to Contact</a>
+        <p class="text-gray-600"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, quae! Fuga hic magnam blanditiis, maxime voluptates sit itaque molestiae, autem asperiores quae dolores numquam libero esse aperiam porro, maiores iste excepturi placeat similique! Laudantium nulla vero magnam? Soluta enim porro quos dolor, in earum voluptatum suscipit. Debitis cupiditate aspernatur architecto.
+        </p>
+        
+        <div>
+            <button class="px-3 py-3 bg-blue-700 text-white hover:bg-blue-600 ">
+            Click Here
+        </button>
+        </div>
+    </div>
+    
+   
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+</body>
+</html>
