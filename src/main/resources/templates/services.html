@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" th:replace= "~{base::parent(~{::#content}, ~{::title}, ~{::script})}">
 <head>
-    <title>Service</title>
+    <title>Service </title>
 </head>
 <body>
 
@@ -13,31 +13,7 @@
 </section>
 
 <script>
-    console.log("services's script");
+    console.log("Services page script");
 </script>
-<!-- 
-    PRACTICE
-<h1>    This is Services Page.
-</h1>
-<hr />
-   ## using fragment : fragment can be insert(th-insert) or replace(th-replace)
-    <div class="host-tag" th:insert="~{base :: parent('about',~{::#second_content})}">
-        <section id="main_content">
-            <h2>This is dynamic content for services in main_content</h2>
-             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum Lorem ipsum dolor sit, 
-                amet consectetur adipisicing elit. At minima maiores dolorem sed aliquam odit!</p>
-                <button>Click on dynamic content</button>
-        </section>
-
-         <section id="second_content">
-            <h2>This is dynamic content for services in second_content</h2>
-             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum Lorem ipsum dolor sit, 
-                amet consectetur adipisicing elit. At minima maiores dolorem sed aliquam odit!</p>
-                <button>Click on dynamic content</button>
-     </section>       
-    </div>    
--->
-
-
 </body>
 </html>

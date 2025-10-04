@@ -12,17 +12,7 @@ th:replace= "~{base::parent(~{::#content}, ~{::title}, ~{::script})}">
     Sed cum libero est in itaque deleniti unde velit illo modi aperiam nemo, magni debitis earum possimus!</p>
 </div>
 <script>
-    console.log("about's script");
+    console.log("About page script");
 </script>
-<!-- 
-    PRACTICE
-<h1>    This is about Page.</h1>
-<hr />
-    ## using fragment : fragment can be insert(th-insert) or replace(th-replace)
-    <div class="host-tag" th:replace="${isLogin} ? ~{base :: parent('about', ~{::.logged_in})} : ~{base :: test(~{::.not_logged_in})}">
-        <p class="logged_in">User is logged in. This is dynamic content for about if Login is True</p>
-        <p class="not_logged_in">This is dynamic content for about if Login is False</p>
-    </div>
--->
 </body>
 </html>
