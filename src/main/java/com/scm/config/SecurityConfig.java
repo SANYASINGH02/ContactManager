@@ -74,7 +74,8 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider() {
 
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        // object of user details service -> service which interact with users(from database)
+        // object of user details service -> service which interact with users(from
+        // database)
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         // object of password encoder
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
@@ -86,7 +87,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // To filter the urls or pages - which one would be public and which one would be private
+    // To filter the urls or pages - which one would be public and which one would
+    // be private
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // configuration
@@ -102,54 +104,61 @@ public class SecurityConfig {
         /** Customized Login Page */
         httpSecurity.formLogin(formLogin -> {
             formLogin.loginPage("/login"); // now default login page redirects to "/login"
-            formLogin.loginProcessingUrl("/authenticate"); // after submitting login form, it will be submitted at "/authenticate"
+            formLogin.loginProcessingUrl("/authenticate"); // after submitting login form, it will be submitted at
+                                                           // "/authenticate"
             formLogin.successForwardUrl("/user/dashboard");
-        
-            // formLogin.failureForwardUrl("/login?error=true"); - due to this error page is not coming on entering wrong login info, instead below method works
+
+            // formLogin.failureForwardUrl("/login?error=true"); - due to this error page is
+            // not coming on entering wrong login info, instead below method works
             formLogin.failureUrl("/login?error=true");
-            
+
             // formLogin.defaultSuccessUrl("/home");
-            formLogin.usernameParameter("email"); // username field of login page named as `email`(by default its 'username') -> write name="email" in input tag for username field in login form(login.html)
+            formLogin.usernameParameter("email"); // username field of login page named as `email`(by default its
+                                                  // 'username') -> write name="email" in input tag for username field
+                                                  // in login form(login.html)
             formLogin.passwordParameter("password"); // name of password field of login page is password
 
             /** which handler/class/method should run on successful login */
             // formLogin.successHandler(new AuthenticationSuccessHandler() {
 
-            //     @Override
-            //     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-            //             Authentication authentication) throws IOException, ServletException {
-            //          // write logic here and redirect the page wherever you want
-            //     }
-                
-            // }); 
+            // @Override
+            // public void onAuthenticationSuccess(HttpServletRequest request,
+            // HttpServletResponse response,
+            // Authentication authentication) throws IOException, ServletException {
+            // // write logic here and redirect the page wherever you want
+            // }
+
+            // });
 
             /** which handler should run on failure of login */
             // formLogin.failureHandler(new AuthenticationFailureHandler() {
 
-            //     @Override
-            //     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-            //             AuthenticationException exception) throws IOException, ServletException {
-            //         // write logic here and redirect the page wherever you want
-            //     }
-                
+            // @Override
+            // public void onAuthenticationFailure(HttpServletRequest request,
+            // HttpServletResponse response,
+            // AuthenticationException exception) throws IOException, ServletException {
+            // // write logic here and redirect the page wherever you want
+            // }
+
             // });
 
         });
 
-        // by default csrf token is enabled & when it is enabled, hit post request on logoutUrl(here '/logout')
+        // by default csrf token is enabled & when it is enabled, hit post request on
+        // logoutUrl(here '/logout')
         // OR disable the csrf token & by default request is of get category
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         /* customizing the logout url */
-            httpSecurity.logout(logoutForm -> {
-                logoutForm.logoutUrl("/do-logout");
-                logoutForm.logoutSuccessUrl("/login?logout=true");
-            });
+        httpSecurity.logout(logoutForm -> {
+            logoutForm.logoutUrl("/do-logout");
+            logoutForm.logoutSuccessUrl("/login?logout=true");
+        });
 
-            /** OAUTH configuration */
-            httpSecurity.oauth2Login(oauth -> {
-                oauth.loginPage("/login");
-                oauth.successHandler(oauthHandler);
-            });
+        /** OAUTH configuration */
+        httpSecurity.oauth2Login(oauth -> {
+            oauth.loginPage("/login");
+            oauth.successHandler(oauthHandler);
+        });
 
         return httpSecurity.build();
     }

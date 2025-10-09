@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>This is user profile page.</h1>
-</body>
+    <h2 th:text="${loggedInUser.name}"></h2>
+    <!-- 'loggedInUser' variable name bcz we're setting 'user' details in 'loggedInUser' variable through model : model.addAttribute("loggedInUser", user);-->
+    <h2 th:text="${loggedInUser.email}"></h2>
+    <!-- if user is logged-in then show this div -->
+    <div th:if="${loggedInUser}">
+      <h2>User is logged-in</h2>
+      <h2>This is user logged-in section</h2>
+    </div>
+  </body>
 </html>

@@ -17,8 +17,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "contact") 
-@Table(name = "contact") 
+@Entity(name = "contact")
+@Table(name = "contact")
 @AllArgsConstructor
 @Getter
 @Setter
@@ -27,21 +27,22 @@ import lombok.Setter;
 public class Contact {
 
     @Id
-private String contactId;
-private String name;
-private String email;
-private String phoneNumber;
-private String address;
-private String picture;
-@Column(length = 1000)
-private String dsecription;
-private boolean favorite = false;
+    private String contactId;
+    private String name;
+    private String email;
+    private String phoneNumber;
+    private String address;
+    private String picture;
+    @Column(length = 1000)
+    private String dsecription;
+    private boolean favorite = false;
 
-@OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-// fetch = FetchType.EAGER means when we fetch contact details then social link should also got fetched
-private List<SocialLink> socialLinks = new ArrayList<>();
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    // fetch = FetchType.EAGER means when we fetch contact details then social link
+    // should also got fetched
+    private List<SocialLink> socialLinks = new ArrayList<>();
 
-@ManyToOne
-private User user;
+    @ManyToOne
+    private User user;
 
 }

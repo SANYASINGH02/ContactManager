@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 @Controller
 public class PageController {
 
