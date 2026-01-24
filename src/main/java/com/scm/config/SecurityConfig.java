@@ -104,15 +104,14 @@ public class SecurityConfig {
         /** Customized Login Page */
         httpSecurity.formLogin(formLogin -> {
             formLogin.loginPage("/login"); // now default login page redirects to "/login"
-            formLogin.loginProcessingUrl("/authenticate"); // after submitting login form, it will be submitted at
-                                                           // "/authenticate"
-            formLogin.successForwardUrl("/user/dashboard");
+            // after submitting login form, it will be submitted at "/authenticate"
+            formLogin.loginProcessingUrl("/authenticate"); 
+            formLogin.defaultSuccessUrl("/user/profile", true); // Use defaultSuccessUrl for proper redirect
 
             // formLogin.failureForwardUrl("/login?error=true"); - due to this error page is
             // not coming on entering wrong login info, instead below method works
             formLogin.failureUrl("/login?error=true");
 
-            // formLogin.defaultSuccessUrl("/home");
             formLogin.usernameParameter("email"); // username field of login page named as `email`(by default its
                                                   // 'username') -> write name="email" in input tag for username field
                                                   // in login form(login.html)
@@ -148,16 +147,17 @@ public class SecurityConfig {
         // logoutUrl(here '/logout')
         // OR disable the csrf token & by default request is of get category
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
-        /* customizing the logout url */
-        httpSecurity.logout(logoutForm -> {
-            logoutForm.logoutUrl("/do-logout");
-            logoutForm.logoutSuccessUrl("/login?logout=true");
-        });
 
         /** OAUTH configuration */
         httpSecurity.oauth2Login(oauth -> {
             oauth.loginPage("/login");
             oauth.successHandler(oauthHandler);
+        });
+
+        /* customizing the logout url */
+        httpSecurity.logout(logoutForm -> {
+            logoutForm.logoutUrl("/do-logout");
+            logoutForm.logoutSuccessUrl("/login?logout=true");
         });
 
         return httpSecurity.build();

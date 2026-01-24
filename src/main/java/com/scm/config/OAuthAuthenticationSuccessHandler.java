@@ -105,5 +105,4 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
 
         new DefaultRedirectStrategy().sendRedirect(request, response, "/user/profile");
     }
-
 }

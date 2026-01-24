@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base::parent(~{::#content}, ~{::title}, ~{::script})}"
+>
+  <head>
+    <title>Add Contacts</title>
+  </head>
+  <body>
+    <div id="content">
+      <!-- SideBar -->
+      <div data-th-if="${loggedInUser}">
+        <div th:replace="~{user/sidebar :: sidebar}"></div>
+      </div>
+
+      <div class="pt-20 sm:pl-64" style="height: 1000px">
+        <div class="grid grid-cols-12">
+          <div class="col-span-3"></div>
+          <div class="col-span-12 md:col-span-6">
+            <div
+              class="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+            >
+              <h1 class="font-semibold text-2xl">Add New Contact</h1>
+              <p class="text-gray-500">
+                This contact will be stored on cloud, you can direct email this
+                client from scm...
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      console.log("Add contact page");
+    </script>
+  </body>
+</html>

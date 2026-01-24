@@ -77,10 +77,10 @@ public class PageController {
     @RequestMapping("/register")
     public String registerPage(Model model) {
         System.out.println("Register Page Loading");
-        UserForm userForm = new UserForm(); // we are sending blank object(can also send default dara) to register page
+        UserForm userForm = new UserForm(); // we are sending blank object(can also send default data) to register page
                                             // through model
         // userForm.setName("Sanya");
-        userForm.setEmail("sanya@gmail.com");
+        userForm.setEmail("sanya@gmail.com"); // default values/data in the form
         userForm.setAbout("Hello");
         userForm.setPassword("12345");
         userForm.setPhoneNumber("67890");

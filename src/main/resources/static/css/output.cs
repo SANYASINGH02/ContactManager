@@ -30,7 +30,6 @@
     --color-blue-700: oklch(48.8% 0.243 264.376);
     --color-blue-800: oklch(42.4% 0.199 265.638);
     --color-blue-900: oklch(37.9% 0.146 265.522);
-    --color-rose-700: oklch(51.4% 0.222 16.935);
     --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
@@ -625,17 +624,8 @@
   .pt-20 {
     padding-top: calc(var(--spacing) * 20);
   }
-  .pr-5 {
-    padding-right: calc(var(--spacing) * 5);
-  }
-  .pr-10 {
-    padding-right: calc(var(--spacing) * 10);
-  }
   .pr-15 {
     padding-right: calc(var(--spacing) * 15);
-  }
-  .pr-20 {
-    padding-right: calc(var(--spacing) * 20);
   }
   .pr-64 {
     padding-right: calc(var(--spacing) * 64);
@@ -823,6 +813,20 @@
       }
     }
   }
+  .hover\:text-blue-700 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-blue-700);
+      }
+    }
+  }
+  .hover\:text-blue-800 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-blue-800);
+      }
+    }
+  }
   .focus\:border-blue-500 {
     &:focus {
       border-color: var(--color-blue-500);
@@ -893,36 +897,9 @@
       translate: var(--tw-translate-x) var(--tw-translate-y);
     }
   }
-  .sm\:pl-4 {
-    @media (width >= 40rem) {
-      padding-left: calc(var(--spacing) * 4);
-    }
-  }
   .sm\:pl-64 {
     @media (width >= 40rem) {
       padding-left: calc(var(--spacing) * 64);
-    }
-  }
-  .sm\:pl-70 {
-    @media (width >= 40rem) {
-      padding-left: calc(var(--spacing) * 70);
-    }
-  }
-  .sm\:pl-74 {
-    @media (width >= 40rem) {
-      padding-left: calc(var(--spacing) * 74);
-    }
-  }
-  .sm\:pl-94 {
-    @media (width >= 40rem) {
-      padding-left: calc(var(--spacing) * 94);
-    }
-  }
-  .sm\:placeholder-rose-700 {
-    @media (width >= 40rem) {
-      &::placeholder {
-        color: var(--color-rose-700);
-      }
     }
   }
   .md\:order-1 {
@@ -1017,6 +994,11 @@
   .md\:text-blue-700 {
     @media (width >= 48rem) {
       color: var(--color-blue-700);
+    }
+  }
+  .md\:text-white {
+    @media (width >= 48rem) {
+      color: var(--color-white);
     }
   }
   .md\:hover\:bg-transparent {

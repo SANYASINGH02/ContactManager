@@ -1,19 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  th:replace="~{base::parent(~{::#content}, ~{::title}, ~{::script})}"
+>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title th:text="${loggedInUser.name}+' | Profile'">Profile Page</title>
   </head>
   <body>
-    <h1>This is user profile page.</h1>
-    <h2 th:text="${loggedInUser.name}"></h2>
-    <!-- 'loggedInUser' variable name bcz we're setting 'user' details in 'loggedInUser' variable through model : model.addAttribute("loggedInUser", user);-->
-    <h2 th:text="${loggedInUser.email}"></h2>
-    <!-- if user is logged-in then show this div -->
-    <div th:if="${loggedInUser}">
-      <h2>User is logged-in</h2>
-      <h2>This is user logged-in section</h2>
+    <div id="content">
+      <!-- SideBar -->
+      <div data-th-if="${loggedInUser}">
+        <div th:replace="~{user/sidebar :: sidebar}"></div>
+      </div>
+
+      <div class="pt-20 sm:pl-64" style="height: 1000px">
+        <div class="flex justify-center flex-col items-center">
+          <h1>Welcome to Profile page.</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed cum
+            libero est in itaque deleniti unde velit illo modi aperiam nemo,
+            magni debitis earum possimus!
+          </p>
+        </div>
+      </div>
     </div>
+    <script>
+      console.log("Profile page");
+    </script>
   </body>
 </html>
