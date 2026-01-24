@@ -20,6 +20,10 @@
             <div
               class="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
             >
+
+                    <div data-th-replace="~{message :: messagebox}"></div>
+
+
               <h1 class="font-semibold text-2xl">Add New Contact</h1>
               <p class="text-gray-500">
                 This contact will be stored on cloud, you can direct email this
@@ -39,7 +43,7 @@
                     class="block mb-2.5 text-sm font-medium text-heading"
                     >Contact Name</label
                   >
-                  <div class="relative mb-6">
+                  <div class="relative mb-1">
                     <div
                       class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
                     >
@@ -48,10 +52,14 @@
                     <input
                       type="text"
                       data-th-field="*{name}"
-                      class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="name"
                     />
                   </div>
+                    <p
+                            data-th-if="${#fields.hasErrors('name')}"
+                            data-th-errors="*{name}"
+                            class="text-red-500"></p>
                 </div>
 
                 <!-- Contact Email -->
@@ -59,9 +67,9 @@
                   <label
                     for="input-group-1"
                     class="block mb-2.5 text-sm font-medium text-heading"
-                    >Contact Enail</label
+                    >Contact Email</label
                   >
-                  <div class="relative mb-6">
+                  <div class="relative mb-1">
                     <div
                       class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
                     >
@@ -70,10 +78,14 @@
                     <input
                       type="text"
                       data-th-field="*{email}"
-                      class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="example@gmail.com"
                     />
                   </div>
+                    <p
+                            data-th-if="${#fields.hasErrors('email')}"
+                            data-th-errors="*{email}"
+                            class="text-red-500"></p>
                 </div>
 
                 <!-- Contact PhoneNumber -->
@@ -83,7 +95,7 @@
                     class="block mb-2.5 text-sm font-medium text-heading"
                     >Contact Phone</label
                   >
-                  <div class="relative mb-6">
+                  <div class="relative mb-1">
                     <div
                       class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
                     >
@@ -92,10 +104,14 @@
                     <input
                       type="text"
                       data-th-field="*{phoneNumber}"
-                      class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="9999999999"
                     />
                   </div>
+                    <p
+                            data-th-if="${#fields.hasErrors('phoneNumber')}"
+                            data-th-errors="*{phoneNumber}"
+                            class="text-red-500"></p>
                 </div>
 
                 <!-- Contact Address -->
@@ -111,6 +127,10 @@
                     class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body"
                     placeholder="Address of the contact"
                   ></textarea>
+                    <p
+                            data-th-if="${#fields.hasErrors('address')}"
+                            data-th-errors="*{address}"
+                            class="text-red-500"></p>
                 </div>
 
                 <!-- Contact Description -->
@@ -142,7 +162,7 @@
                         <input
                           type="text"
                           data-th-field="*{websiteLink}"
-                          class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           placeholder="https://yourwebsite.com/"
                         />
                       </div>
@@ -161,7 +181,7 @@
                         <input
                           type="text"
                           data-th-field="*{linkedinLink}"
-                          class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           placeholder="https://linkedin.com/in/yourprofile"
                         />
                       </div>
@@ -177,7 +197,7 @@
                     >Contact Image</label
                   >
                   <input
-                    class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+                          class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     th:field="*{profileImage}"
                     type="file"
                     accept="image/*"
@@ -189,7 +209,7 @@
                   <input
                     data-th-field="*{favorite}"
                     type="checkbox"
-                    class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label
                     for="default-checkbox"
