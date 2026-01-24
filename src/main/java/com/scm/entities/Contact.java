@@ -34,12 +34,14 @@ public class Contact {
     private String address;
     private String picture;
     @Column(length = 1000)
-    private String dsecription;
+    private String description;
     private boolean favorite = false;
+    private String websiteLink;
+    private String linkedinLink;
 
     @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     // fetch = FetchType.EAGER means when we fetch contact details then social link
-    // should also got fetched
+    // should also get fetched
     private List<SocialLink> socialLinks = new ArrayList<>();
 
     @ManyToOne

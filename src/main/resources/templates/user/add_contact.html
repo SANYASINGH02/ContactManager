@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html
   lang="en"
   th:replace="~{base::parent(~{::#content}, ~{::title}, ~{::script})}"
@@ -9,7 +9,7 @@
   <body>
     <div id="content">
       <!-- SideBar -->
-      <div data-th-if="${loggedInUser}">
+      <div th:if="${loggedInUser}">
         <div th:replace="~{user/sidebar :: sidebar}"></div>
       </div>
 
@@ -25,6 +25,191 @@
                 This contact will be stored on cloud, you can direct email this
                 client from scm...
               </p>
+
+              <form class="mt-8"
+                th:action="@{'/user/contacts/add'}"
+                th:object="${contactForm}"
+                method="post"
+                enctype="multipart/form-data"
+              >
+                <!-- Contact Name -->
+                <div class="mb-3">
+                  <label
+                    for="input-group-1"
+                    class="block mb-2.5 text-sm font-medium text-heading"
+                    >Contact Name</label
+                  >
+                  <div class="relative mb-6">
+                    <div
+                      class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                    >
+                      <i class="w-4 h-4 fa-regular fa-user"></i>
+                    </div>
+                    <input
+                      type="text"
+                      data-th-field="*{name}"
+                      class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                      placeholder="name"
+                    />
+                  </div>
+                </div>
+
+                <!-- Contact Email -->
+                <div class="mb-3">
+                  <label
+                    for="input-group-1"
+                    class="block mb-2.5 text-sm font-medium text-heading"
+                    >Contact Enail</label
+                  >
+                  <div class="relative mb-6">
+                    <div
+                      class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                    >
+                      <i class="w-4 h-4 fa-regular fa-envelope"></i>
+                    </div>
+                    <input
+                      type="text"
+                      data-th-field="*{email}"
+                      class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                      placeholder="example@gmail.com"
+                    />
+                  </div>
+                </div>
+
+                <!-- Contact PhoneNumber -->
+                <div class="mb-3">
+                  <label
+                    for="input-group-1"
+                    class="block mb-2.5 text-sm font-medium text-heading"
+                    >Contact Phone</label
+                  >
+                  <div class="relative mb-6">
+                    <div
+                      class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                    >
+                      <i class="w-4 h-4 fa-solid fa-phone"></i>
+                    </div>
+                    <input
+                      type="text"
+                      data-th-field="*{phoneNumber}"
+                      class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                      placeholder="9999999999"
+                    />
+                  </div>
+                </div>
+
+                <!-- Contact Address -->
+                <div class="mb-3">
+                  <label
+                    for="message"
+                    class="block mb-2.5 text-sm font-medium text-heading"
+                    >Contact Address</label
+                  >
+                  <textarea
+                    data-th-field="*{address}"
+                    rows="4"
+                    class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body"
+                    placeholder="Address of the contact"
+                  ></textarea>
+                </div>
+
+                <!-- Contact Description -->
+                <div class="mb-3">
+                  <label
+                    for="message"
+                    class="block mb-2.5 text-sm font-medium text-heading"
+                    >Contact Description</label
+                  >
+                  <textarea
+                    data-th-field="*{description}"
+                    rows="4"
+                    class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body"
+                    placeholder="Write about your contact here..."
+                  ></textarea>
+                </div>
+
+                <!-- Social Links-->
+                <div class="flex space-x-3 mb-3">
+                  <div class="w-full">
+                    <!-- Website link-->
+                    <div class="mb-3">
+                      <div class="relative mb-6">
+                        <div
+                          class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                        >
+                          <i class="w-4 h-4 fa-solid fa-earth-americas"></i>
+                        </div>
+                        <input
+                          type="text"
+                          data-th-field="*{websiteLink}"
+                          class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                          placeholder="https://yourwebsite.com/"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w-full">
+                    <!-- Linkein link-->
+                    <div class="mb-3">
+                      <div class="relative mb-6">
+                        <div
+                          class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                        >
+                          <i class="w-4 h-4 fa-brands fa-linkedin"></i>
+                        </div>
+                        <input
+                          type="text"
+                          data-th-field="*{linkedinLink}"
+                          class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                          placeholder="https://linkedin.com/in/yourprofile"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Contact Image Field-->
+                <div class="mb-3">
+                  <label
+                    class="block mb-2.5 text-sm font-medium text-heading"
+                    for="large_size"
+                    >Contact Image</label
+                  >
+                  <input
+                    class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+                    th:field="*{profileImage}"
+                    type="file"
+                    accept="image/*"
+                  />
+                </div>
+
+                <!-- Favourite Checkbox-->
+                <div class="flex items-center mb-4">
+                  <input
+                    data-th-field="*{favorite}"
+                    type="checkbox"
+                    class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
+                  />
+                  <label
+                    for="default-checkbox"
+                    class="select-none ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >Is this contact is your favorite one ?</label
+                  >
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-container text-center">
+                  <!-- Add Contact -->
+                    <button type="submit" class="px-3 py-2 dark:bg-blue-600 hover:dark:bg-blue-700 rounded bg-black text-white">
+                      Add Contact
+                    </button>
+                  <!-- Reset -->
+                    <button type="reset" class="px-3 py-2 rounded dark:bg-blue-600 hover:dark:bg-blue-700 bg-black text-white">
+                     Reset
+                    </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
