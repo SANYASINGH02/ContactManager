@@ -98,6 +98,12 @@ public class SecurityConfig {
             authorize.anyRequest().permitAll();
         });
 
+        httpSecurity.exceptionHandling(ex -> {
+            ex.authenticationEntryPoint((request, response, authException) -> {
+                response.sendRedirect("/login");
+            });
+        });
+
         /** form default login */
         // httpSecurity.formLogin(Customizer.withDefaults());
 
