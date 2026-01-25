@@ -7,9 +7,12 @@ import com.scm.helpers.Helper;
 import com.scm.helpers.Message;
 import com.scm.helpers.MessageType;
 import com.scm.services.ContactService;
+import com.scm.services.ImageService;
 import com.scm.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,20 +22,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/user/contacts")
 public class ContactController {
 
-    @Autowired
-    ContactService contactService;
+    private Logger logger = LoggerFactory.getLogger(ContactController.class);
 
     @Autowired
-    UserService userService;
+    private ContactService contactService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ImageService imageService;
 
     // add contact page/view: Handler, bydefault it is GET method
     @RequestMapping("/add")
     public String addContactView(Model model) {
         ContactForm contactForm = new ContactForm();
+        contactForm.setName("Sanya");
+        contactForm.setEmail("sanya@gmail.com");
+        contactForm.setAddress("telibagh");
+        contactForm.setPhoneNumber("1234567890");
         model.addAttribute("contactForm", contactForm);
         return "user/add_contact";
     }
@@ -46,8 +60,9 @@ public class ContactController {
 
         /* process the form data */
 
-        // validate the form
+        // 1. validate the form
         if (result.hasErrors()) {
+            result.getAllErrors().forEach(error -> logger.info(error.getDefaultMessage()));
             session.setAttribute("message",
                     Message.builder()
                             .content("Please correct the following errors")
@@ -56,13 +71,24 @@ public class ContactController {
             return "user/add_contact";
         }
 
-        // convert the ContactForm to Contact entity because we have received ContactForm & we've to save Contact
+        // 2. convert the ContactForm to Contact entity because we have received ContactForm & we've to save Contact
         // form -> Contact
-        // processing User of the Contact
+
+        // 2.1 processing User of the Contact
+
         String username = Helper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(username).orElse(null);
 
-        // TODO: process the contact profile pic
+        // 2.2 process the contact picture/image
+        String fileUrl = null;
+        String fileName = null;
+        
+        if (contactForm.getContactImage() != null && !contactForm.getContactImage().isEmpty()) {
+            logger.info("file information : {}", contactForm.getContactImage().getOriginalFilename());
+            fileName = UUID.randomUUID().toString();
+            fileUrl = imageService.uploadImage(contactForm.getContactImage(), fileName);
+        }
+
         Contact contact = new Contact();
         contact.setName(contactForm.getName());
         contact.setEmail(contactForm.getEmail());
@@ -73,17 +99,19 @@ public class ContactController {
         contact.setUser(user);
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedinLink(contactForm.getLinkedinLink());
-        // TODO: set profile pic
+        //set profile pic & its public id
+        contact.setPicture(fileUrl);
+        contact.setCloudinaryImagePublicId(fileName);
 
         // save the Contact
         contactService.save(contact);
-        System.out.println("Saving Contact......");
+        logger.info("Saving Contact......{}", contact);
         // set message to be displayed on the view
         session.setAttribute("message",
                 Message.builder()
                         .content("You have successfully added a new contact")
                         .type(MessageType.green)
                         .build());
-        return "redirect:/user/profile";
+        return "redirect:/user/contacts/add";
     }
 }
