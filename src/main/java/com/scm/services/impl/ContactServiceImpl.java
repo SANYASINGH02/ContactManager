@@ -6,6 +6,9 @@ import com.scm.helpers.ResourceNotFoundException;
 import com.scm.repositories.ContactRepo;
 import com.scm.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,7 +61,9 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<Contact> getByUser(User user) {
-        return contactRepo.findByUser(user);
+    public Page<Contact> getByUser(User user, int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equals("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepo.findByUser(user, pageable);
     }
 }

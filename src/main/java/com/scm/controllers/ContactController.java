@@ -3,6 +3,7 @@ package com.scm.controllers;
 import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.forms.ContactForm;
+import com.scm.helpers.AppConstants;
 import com.scm.helpers.Helper;
 import com.scm.helpers.Message;
 import com.scm.helpers.MessageType;
@@ -14,6 +15,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +23,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -52,11 +54,12 @@ public class ContactController {
         return "user/add_contact";
     }
 
-    // we're sending contact data to server using POST method (ref- add_contact form field method=post).
+    // we're sending contact data to server using POST method (ref- add_contact form
+    // field method=post).
     // So this saveContact function need to be POST
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String saveContact(@Valid @ModelAttribute ContactForm contactForm, BindingResult result,
-                              Authentication authentication, HttpSession session) {
+            Authentication authentication, HttpSession session) {
         System.out.println(contactForm);
 
         /* process the form data */
@@ -72,7 +75,8 @@ public class ContactController {
             return "user/add_contact";
         }
 
-        // 2. convert the ContactForm to Contact entity because we have received ContactForm & we've to save Contact
+        // 2. convert the ContactForm to Contact entity because we have received
+        // ContactForm & we've to save Contact
         // form -> Contact
 
         // 2.1 processing User of the Contact
@@ -83,7 +87,7 @@ public class ContactController {
         // 2.2 process the contact picture/image
         String fileUrl = null;
         String fileName = null;
-        
+
         if (contactForm.getContactImage() != null && !contactForm.getContactImage().isEmpty()) {
             logger.info("file information : {}", contactForm.getContactImage().getOriginalFilename());
             fileName = UUID.randomUUID().toString();
@@ -100,7 +104,7 @@ public class ContactController {
         contact.setUser(user);
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedinLink(contactForm.getLinkedinLink());
-        //set profile pic & its public id
+        // set profile pic & its public id
         contact.setPicture(fileUrl);
         contact.setCloudinaryImagePublicId(fileName);
 
@@ -117,13 +121,21 @@ public class ContactController {
     }
 
     @RequestMapping
-    public String viewContacts(Model model, Authentication authentication) {
+    public String viewContacts(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE + "") int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            Model model, Authentication authentication) {
+        // example of request url :
+        // http://localhost:8081/user/contacts?size=2&page=2&sortBy=email
 
         // load all the logged-in user's contacts
         String username = Helper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(username).orElse(null);
-        List<Contact> contactList = contactService.getByUser(user);
-        model.addAttribute("contacts", contactList);
+        Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
+        model.addAttribute("contactsPage", pageContact);
+        model.addAttribute("pageSize", AppConstants.PAGE_SIZE);
         return "user/contacts";
     }
 }
