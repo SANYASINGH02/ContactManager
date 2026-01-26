@@ -3,6 +3,7 @@ package com.scm.controllers;
 import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.forms.ContactForm;
+import com.scm.forms.ContactSearchForm;
 import com.scm.helpers.AppConstants;
 import com.scm.helpers.Helper;
 import com.scm.helpers.Message;
@@ -133,9 +134,57 @@ public class ContactController {
         // load all the logged-in user's contacts
         String username = Helper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(username).orElse(null);
-        Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
-        model.addAttribute("contactsPage", pageContact);
+        Page<Contact> contactsPage = contactService.getByUser(user, page, size, sortBy, direction);
+        model.addAttribute("contactsPage", contactsPage);
         model.addAttribute("pageSize", AppConstants.PAGE_SIZE);
+        model.addAttribute("contactSearchForm", new ContactSearchForm());
         return "user/contacts";
     }
+
+    // search handler
+    @RequestMapping("/search")
+    public String searchHandler(
+            @ModelAttribute ContactSearchForm contactSearchForm,
+            @RequestParam(value="page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE + "") int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            Model model, Authentication authentication
+    ) {
+        String field = contactSearchForm.getField();
+        String keyword = contactSearchForm.getValue();
+        logger.info("Search field {} and keyword {}", field, keyword);
+
+        User user = userService.getUserByEmail(Helper.getEmailOfLoggedInUser(authentication)).orElse(null);
+        Page<Contact> contactsPage = null;
+        if(field.equalsIgnoreCase("name")) {
+            contactsPage = contactService.searchByName(keyword, size, page, sortBy, direction, user);
+        } else if(field.equalsIgnoreCase("email")) {
+            contactsPage = contactService.searchByEmail(keyword, size, page, sortBy, direction, user);
+        } else {
+            contactsPage = contactService.searchByPhoneNumber(keyword, size, page, sortBy, direction, user);
+        }
+        model.addAttribute("contactsPage", contactsPage);
+        model.addAttribute("pageSize", AppConstants.PAGE_SIZE);
+        model.addAttribute("contactSearchForm", contactSearchForm);
+        return "user/search";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

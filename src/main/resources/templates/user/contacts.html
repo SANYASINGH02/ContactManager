@@ -19,97 +19,68 @@
           <p class="text-center">List of your contacts</p>
 
           <div class="contacts_container p-5">
+            <!-- Entire table -->
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-              <div
-                class="flex p-5 items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900"
+              <form
+                data-th-object="${contactSearchForm}"
+                data-th-action="@{'/user/contacts/search'}"
               >
-                <div>
+                <!-- Search bar & select bar entire block/row of table-->
+                <div
+                  class="flex space-x-2 p-5 items-center flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900"
+                >
+                  <div>
+                    <select
+                      data-th-field="*{field}"
+                      id="countries_disabled"
+                      class="block w-35 px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                    >
+                      <option selected value="">Select a field</option>
+                      <option value="name">Name</option>
+                      <option value="phone">Phone</option>
+                      <option value="email">Email</option>
+                    </select>
+                  </div>
+
+                  <label class="sr-only">Search contact</label>
+                  <div class="relative">
+                    <div
+                      class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
+                    >
+                      <svg
+                        class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      data-th-field="*{value}"
+                      type="text"
+                      id="table-search-users"
+                      class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Search for users"
+                    />
+                  </div>
                   <button
-                    id="dropdownDefaultButton"
-                    data-dropdown-toggle="dropdown"
-                    class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                    type="button"
+                    type="submit"
+                    class="px-3 py-2 bg-gray-800 text-white rounded"
                   >
-                    <span class="sr-only">Action button</span>
-                    Action
-                    <svg
-                      class="w-4 h-4 ms-1.5 -me-0.5"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m19 9-7 7-7-7"
-                      />
-                    </svg>
+                    Search
                   </button>
-                  <!-- Dropdown menu -->
-                  <div
-                    id="dropdown"
-                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
-                  >
-                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
-                      <li>
-                        <a
-                          href="#"
-                          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >Reward</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >Promote</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >Activate account</a
-                        >
-                      </li>
-                    </ul>
-                  </div>
                 </div>
-                <label for="table-search" class="sr-only">Search</label>
-                <div class="relative">
-                  <div
-                    class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
-                  >
-                    <svg
-                      class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                      />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    id="table-search-users"
-                    class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search for users"
-                  />
-                </div>
-              </div>
+              </form>
               <table
+                data-th-if="${contactsPage.totalElements>0}"
                 class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
               >
                 <thead
@@ -195,6 +166,7 @@
 
               <!-- PAGINATION component-->
               <div
+                data-th-if="${contactsPage.totalElements>0}"
                 class="pagination_container p-5 flex justify-center bg-gray-150 dark:bg-gray-800"
               >
                 <nav aria-label="Page navigation example">
@@ -227,6 +199,12 @@
                   </ul>
                 </nav>
               </div>
+              <h1
+                data-th-if="${contactsPage.totalElements<=0}"
+                class="text-5xl text-center bg-white p-4"
+              >
+                No result found
+              </h1>
             </div>
           </div>
         </div>

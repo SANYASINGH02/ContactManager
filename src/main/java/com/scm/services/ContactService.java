@@ -22,12 +22,19 @@ public interface ContactService {
     // delete contact
     void delete(String id);
 
-    // search contacts
-    List<Contact> search(String name, String email, String phoneNumber);
 
     // get contacts by user id
     List<Contact> getByUserId(String userId);
 
     // get contacts by User
     Page<Contact> getByUser(User user, int page, int size, String sortField, String sortDirection);
+
+    // search contacts by name
+    Page<Contact> searchByName(String nameKeyword, int size, int page, String sortBy, String order, User user);
+
+    // search contacts by email
+    Page<Contact> searchByEmail(String emailKeyword, int size, int page, String sortBy, String order, User user);
+
+    // search contacts by phone number
+    Page<Contact> searchByPhoneNumber(String phoneNumberKeyword, int size, int page, String sortBy, String order, User user);
 }

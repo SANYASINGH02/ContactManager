@@ -22,4 +22,10 @@ public interface ContactRepo extends JpaRepository<Contact, String> {
     // // This method can't be get by default bcz Contact entity doesn't have any "userId" field, so we need to write the logic
      @Query("SELECT c FROM contact c WHERE c.user.userId = :userId")
      List<Contact> findByUserId(@Param("userId") String userId);
+
+    Page<Contact> findByUserAndNameContaining(User user, String namekeyword, Pageable pageable);
+
+    Page<Contact> findByUserAndEmailContaining(User user, String emailkeyword, Pageable pageable);
+
+    Page<Contact> findByUserAndPhoneNumberContaining(User user, String phonekeyword, Pageable pageable);
 }
