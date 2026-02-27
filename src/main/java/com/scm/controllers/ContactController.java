@@ -12,6 +12,7 @@ import com.scm.services.ContactService;
 import com.scm.services.ImageService;
 import com.scm.services.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.PushBuilder;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -171,6 +169,32 @@ public class ContactController {
     }
 
 
+    // delete contact handler
+    @RequestMapping("/delete/{contactId}")
+    public String deleteContactHandler(
+            @PathVariable String contactId,
+            HttpSession session,
+            Authentication authentication
+    ) {
+        /*
+        TODO: delete the image from cloudinary as well
+        // remove the image from cloudinary
+        // get the contact by id
+        Contact contact = contactService.getById(contactId);
+        // delete the image from cloudinary
+        imageService.deleteImage(contact.getCloudinaryImagePublicId());
+        */
+
+        // delete the contact
+        contactService.delete(contactId);
+
+        session.setAttribute("message",
+                Message.builder()
+                        .content("Contact deleted successfully")
+                        .type(MessageType.green)
+                        .build());
+        return "redirect:/user/contacts";
+    }
 
 
 

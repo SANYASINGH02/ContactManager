@@ -21,6 +21,9 @@
           <div class="contacts_container p-5">
             <!-- Entire table -->
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+              <div th:replace="~{message :: messagebox}"></div>
+
               <form
                 data-th-object="${contactSearchForm}"
                 data-th-action="@{'/user/contacts/search'}"
@@ -149,14 +152,16 @@
                     </td>
                     <td class="px-6 py-4">
                       <div>
-                        <a href="">
+                        <button th:onclick="deleteContact([[${c.contactId}]])">
                           <i class="fa-solid fa-trash w-6 h-6"></i>
-                        </a>
+                        </button>
                         <a href="">
                           <i class="fa-solid fa-pen w-6 h-6"></i>
                         </a>
                         <a>
 <!-- data-th-attr="data-id=*{contactId}" equivalent to th:data-id="*{contactId}" [shorthand-with this use th:onclick]-->
+
+<!--  data-th-attr="data-id=*{contactId}" onclick="loadContactData(this.getAttribute('data-id'))"  can be REPLACED with th:onclick="loadContactData([[${c.contactId}]])"   -->
                         <button
                           data-th-attr="data-id=*{contactId}"
                           onclick="loadContactData(this.getAttribute('data-id'))"

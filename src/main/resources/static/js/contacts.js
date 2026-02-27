@@ -36,9 +36,9 @@ function  openContactModal() {
 
 function closeContactModal() {contactModal.hide();}
 
-function loadContactData(id) {
-    console.log("Loading contact data for ID:", id);
-    fetch('/api/contacts/' + id) // makes HTTP GET request to our /api/contacts/{contactId} endpoint
+function loadContactData(contactId) {
+    console.log("Loading contact data for ID:", contactId);
+    fetch('/api/contacts/' + contactId) // makes HTTP GET request to our /api/contacts/{contactId} endpoint
         .then(response => response.json())  // converts HTTP response to JSON object, response.json() parses the JSON string from server
         .then(data => {  // data is the Contact object returned from your API
             console.log("Received data: ", data);
@@ -55,3 +55,22 @@ function loadContactData(id) {
         })
         .catch(error => console.error('Error in contacts.js:', error));
 }
+
+// delete contact
+function deleteContact(contactId) {
+    // https://sweetalert2.github.io/#download
+    Swal.fire({
+        icon: "warning",
+        title: "Do you want to delete the contact?",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = "/user/contacts/delete/" + contactId;
+            window.location.replace(url);
+        } else if (result.isDenied) {
+            Swal.fire("Contact is not deleted", "", "info");
+        }
+    });
+}
+
