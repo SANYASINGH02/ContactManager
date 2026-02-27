@@ -196,6 +196,83 @@ public class ContactController {
         return "redirect:/user/contacts";
     }
 
+    // update contact form view
+    // TODO: set better naming convention for path url (view)
+    @GetMapping("/view/{contactId}")
+    public String updateContactFormView(
+            @PathVariable String contactId,
+            Model model
+    ) {
+        Contact contact = contactService.getById(contactId);
+        ContactForm contactForm = new ContactForm();
+        contactForm.setName(contact.getName());
+        contactForm.setEmail(contact.getEmail());
+        contactForm.setAddress(contact.getAddress());
+        contactForm.setPhoneNumber(contact.getPhoneNumber());
+        contactForm.setDescription(contact.getDescription());
+        contactForm.setFavorite(contact.isFavorite());
+        contactForm.setWebsiteLink(contact.getWebsiteLink());
+        contactForm.setLinkedinLink(contact.getLinkedinLink());
+        contact.setPicture(contact.getPicture());
+
+        model.addAttribute("contactForm", contactForm);
+        model.addAttribute("contactId", contactId);
+        return "user/update_contact_view";
+    }
+
+    @RequestMapping(value = "/update/{contactId}", method = RequestMethod.POST)
+    public String updateContactHandler(
+            @PathVariable String contactId,
+            @Valid @ModelAttribute ContactForm contactForm,
+            Model model,
+            BindingResult result,
+            HttpSession session,
+            Authentication authentication
+    ) {
+        // 1. validate the form
+        if(result.hasErrors()) {
+            result.getAllErrors().forEach(error -> logger.info(error.getDefaultMessage()));
+            session.setAttribute("message",
+                    Message.builder()
+                            .content("Please correct the following errors")
+                            .type(MessageType.red)
+                            .build());
+            return "user/update_contact_view";
+        }
+
+        // 2. update the contact details
+        Contact contact = contactService.getById(contactId);
+        contact.setName(contactForm.getName());
+        contact.setEmail(contactForm.getEmail());
+        contact.setAddress(contactForm.getAddress());
+        contact.setPhoneNumber(contactForm.getPhoneNumber());
+        contact.setDescription(contactForm.getDescription());
+        contact.setFavorite(contactForm.isFavorite());
+        contact.setWebsiteLink(contactForm.getWebsiteLink());
+        contact.setLinkedinLink(contactForm.getLinkedinLink());
+
+        // 3. update the image if present
+        if(contactForm.getContactImage() != null && !contactForm.getContactImage().isEmpty()) {
+            logger.info("file information : {}", contactForm.getContactImage().getOriginalFilename());
+            String fileName = UUID.randomUUID().toString();
+            String fileUrl = imageService.uploadImage(contactForm.getContactImage(), fileName);
+            contact.setPicture(fileUrl);
+            contact.setCloudinaryImagePublicId(fileName);
+            contactForm.setPicture(fileUrl);
+        }
+
+        var updatedContact = contactService.update(contact);
+        logger.info("Updated Contact {}", updatedContact);
+        model.addAttribute("contact", updatedContact);
+        session.setAttribute("message",
+                Message.builder()
+                        .content("Contact updated successfully")
+                        .type(MessageType.green)
+                        .build());
+        return "redirect:/user/contacts/view/" + contactId;
+    }
+
+
 
 
 

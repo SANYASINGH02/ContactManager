@@ -39,4 +39,6 @@ public class ContactForm {
     private String linkedinLink;
 
     private MultipartFile contactImage;
+
+    private String picture;
 }

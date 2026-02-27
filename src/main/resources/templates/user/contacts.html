@@ -152,15 +152,18 @@
                     </td>
                     <td class="px-6 py-4">
                       <div>
+                        <!-- delete contact -->
                         <button th:onclick="deleteContact([[${c.contactId}]])">
                           <i class="fa-solid fa-trash w-6 h-6"></i>
                         </button>
-                        <a href="">
+
+                        <!-- update contact -->
+                        <a th:href="@{'/user/contacts/view/' + *{contactId}}">
                           <i class="fa-solid fa-pen w-6 h-6"></i>
                         </a>
-                        <a>
-<!-- data-th-attr="data-id=*{contactId}" equivalent to th:data-id="*{contactId}" [shorthand-with this use th:onclick]-->
 
+                        <!-- view contact -->
+<!--  data-th-attr="data-id=*{contactId}" equivalent to th:data-id="*{contactId}" [shorthand-with this use th:onclick]-->
 <!--  data-th-attr="data-id=*{contactId}" onclick="loadContactData(this.getAttribute('data-id'))"  can be REPLACED with th:onclick="loadContactData([[${c.contactId}]])"   -->
                         <button
                           data-th-attr="data-id=*{contactId}"
@@ -168,7 +171,6 @@
                         >
                           <i class="fa-solid fa-eye w-6 h-6"></i>
                         </button>
-                        </a>
                       </div>
                     </td>
                   </tr>

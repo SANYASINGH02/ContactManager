@@ -29,8 +29,20 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact update(Contact contact) {
-        // TODO
-        return null;
+        var oldContact = contactRepo.findById(contact.getContactId())
+                .orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
+        oldContact.setName(contact.getName());
+        oldContact.setEmail(contact.getEmail());
+        oldContact.setPhoneNumber(contact.getPhoneNumber());
+        oldContact.setPicture(contact.getPicture());
+        oldContact.setDescription(contact.getDescription());
+        oldContact.setFavorite(contact.isFavorite());
+        oldContact.setWebsiteLink(contact.getWebsiteLink());
+        oldContact.setLinkedinLink(contact.getLinkedinLink());
+        oldContact.setSocialLinks(contact.getSocialLinks());
+        oldContact.setCloudinaryImagePublicId(contact.getCloudinaryImagePublicId());
+
+        return contactRepo.save(oldContact);
     }
 
     @Override
