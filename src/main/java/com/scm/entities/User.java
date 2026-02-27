@@ -56,7 +56,7 @@ public class User implements UserDetails {
 
     // information---
     // private String gender;
-    private boolean enabled = true;
+    private boolean enabled = false;
     private boolean emailVerified = true;
     private boolean phoneVerified = false;
 

@@ -69,6 +69,9 @@ public class SecurityConfig {
     @Autowired
     private OAuthAuthenticationSuccessHandler oauthHandler;
 
+    @Autowired
+    private AuthFailureHandler authFailureHandler;
+
     // Configuration of authenticationProvider
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -123,7 +126,7 @@ public class SecurityConfig {
                                                   // in login form(login.html)
             formLogin.passwordParameter("password"); // name of password field of login page is password
 
-            /** which handler/class/method should run on successful login */
+            /* which handler/class/method should run on successful login */
             // formLogin.successHandler(new AuthenticationSuccessHandler() {
 
             // @Override
@@ -135,17 +138,25 @@ public class SecurityConfig {
 
             // });
 
-            /** which handler should run on failure of login */
-            // formLogin.failureHandler(new AuthenticationFailureHandler() {
+            /* handler which should run on failure of login (using Anonymous class) */
+//             formLogin.failureHandler(new AuthenticationFailureHandler() {
+//
+//             @Override
+//             public void onAuthenticationFailure(HttpServletRequest request,
+//             HttpServletResponse response,
+//             AuthenticationException exception) throws IOException, ServletException {
+//             // write logic here and redirect the page wherever you want
+//             }
+//             });
 
-            // @Override
-            // public void onAuthenticationFailure(HttpServletRequest request,
-            // HttpServletResponse response,
-            // AuthenticationException exception) throws IOException, ServletException {
-            // // write logic here and redirect the page wherever you want
-            // }
+            /* OR use lambda method */
+//            formLogin.failureHandler((request, response, exception) -> {
+//                System.out.println("Authentication failed: " + exception.getMessage());
+//                response.sendRedirect("/login?error=true");
+//            });
 
-            // });
+            /* OR use/make a separate class to handle failure auth*/
+            formLogin.failureHandler(authFailureHandler);
 
         });
 
