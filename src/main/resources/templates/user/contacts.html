@@ -155,8 +155,14 @@
                         <a href="">
                           <i class="fa-solid fa-pen w-6 h-6"></i>
                         </a>
-                        <a href="">
+                        <a>
+<!-- data-th-attr="data-id=*{contactId}" equivalent to th:data-id="*{contactId}" [shorthand-with this use th:onclick]-->
+                        <button
+                          data-th-attr="data-id=*{contactId}"
+                          onclick="loadContactData(this.getAttribute('data-id'))"
+                        >
                           <i class="fa-solid fa-eye w-6 h-6"></i>
+                        </button>
                         </a>
                       </div>
                     </td>
@@ -208,8 +214,10 @@
             </div>
           </div>
         </div>
+        <div data-th-replace="~{ user/contact_modals :: contact}"></div>
       </div>
     </div>
+    <script data-th-src="@{'/js/contacts.js'}"></script>
     <script>
       console.log("Contact page");
     </script>

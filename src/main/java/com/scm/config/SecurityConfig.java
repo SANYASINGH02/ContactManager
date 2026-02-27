@@ -93,7 +93,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // configuration
         httpSecurity.authorizeHttpRequests(authorize -> {
-            // authorize.requestMatchers("/home", "/register").permitAll();
+            authorize.requestMatchers("/api/**").permitAll();
             authorize.requestMatchers("/user/**").authenticated();
             authorize.anyRequest().permitAll();
         });
