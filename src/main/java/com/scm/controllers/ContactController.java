@@ -12,7 +12,6 @@ import com.scm.services.ContactService;
 import com.scm.services.ImageService;
 import com.scm.services.UserService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.PushBuilder;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +24,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user/contacts")
@@ -272,20 +275,48 @@ public class ContactController {
         return "redirect:/user/contacts/view/" + contactId;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // export all contacts to Excel
+    // previously used way for export was only exporting the current page contacts and not the all contacts(from all pages)
+    @GetMapping("/export")
+    public void exportContacts(
+            Authentication authentication,
+            HttpServletResponse response
+    ) throws Exception {
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+        User user = userService.getUserByEmail(username).orElse(null);
+        
+        List<Contact> contacts = contactService.getByUser(user);
+        
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Contacts");
+        
+        // Header row
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("Name");
+        headerRow.createCell(1).setCellValue("Email");
+        headerRow.createCell(2).setCellValue("Phone");
+        headerRow.createCell(3).setCellValue("Address");
+        headerRow.createCell(4).setCellValue("Description");
+        headerRow.createCell(5).setCellValue("Website");
+        headerRow.createCell(6).setCellValue("LinkedIn");
+        
+        // Data rows
+        int rowNum = 1;
+        for (Contact contact : contacts) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(contact.getName());
+            row.createCell(1).setCellValue(contact.getEmail());
+            row.createCell(2).setCellValue(contact.getPhoneNumber());
+            row.createCell(3).setCellValue(contact.getAddress());
+            row.createCell(4).setCellValue(contact.getDescription());
+            row.createCell(5).setCellValue(contact.getWebsiteLink());
+            row.createCell(6).setCellValue(contact.getLinkedinLink());
+        }
+        
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=contacts.xlsx");
+        workbook.write(response.getOutputStream());
+        workbook.close();
+    }
 
 }

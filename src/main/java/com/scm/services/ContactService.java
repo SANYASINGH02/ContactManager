@@ -29,6 +29,9 @@ public interface ContactService {
     // get contacts by User
     Page<Contact> getByUser(User user, int page, int size, String sortField, String sortDirection);
 
+    // get all contacts by User (no pagination)
+    List<Contact> getByUser(User user);
+
     // search contacts by name
     Page<Contact> searchByName(String nameKeyword, int size, int page, String sortBy, String order, User user);
 

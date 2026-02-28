@@ -81,13 +81,9 @@
                 </div>
               </form>
               <div>
-                <button
-                        type="button"
-                        onclick="exportData()"
-                        class="px-3 py-2 bg-green-800 text-white rounded"
-                >
-                  Export
-                </button>
+                <a href="/user/contacts/export" class="px-3 py-2 bg-green-800 text-white rounded inline-block">
+                  Export All
+                </a>
               </div>
               </div>
 
@@ -240,20 +236,21 @@
       </div>
     </div>
     <script data-th-src="@{'/js/contacts.js'}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>-->
     <script>
       console.log("Contact page");
     </script>
-    <script>
-      console.log("exporting contacts...");
-      function exportData() {
-        TableToExcel.convert(document.getElementById("contact-table"), {
-          name: "contacts.xlsx",
-          sheet: {
-            name: "Sheet 1",
-          },
-        });
-      }
-    </script>
+<!--    <script>-->
+<!--    This method only exports contacts on the current page & not export all the contacts -->
+<!--      console.log("exporting contacts...");-->
+<!--      function exportData() {-->
+<!--        TableToExcel.convert(document.getElementById("contact-table"), {-->
+<!--          name: "contacts.xlsx",-->
+<!--          sheet: {-->
+<!--            name: "Sheet 1",-->
+<!--          },-->
+<!--        });-->
+<!--      }-->
+<!--    </script>-->
   </body>
 </html>

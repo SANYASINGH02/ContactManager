@@ -1,4 +1,4 @@
-/*! tailwindcss v4.2.1 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -64,7 +64,6 @@
     --font-weight-bold: 700;
     --tracking-tight: -0.025em;
     --leading-tight: 1.25;
-    --leading-relaxed: 1.625;
     --radius-sm: 0.25rem;
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
@@ -256,14 +255,8 @@
   .inset-y-0 {
     inset-block: calc(var(--spacing) * 0);
   }
-  .start {
-    inset-inline-start: var(--spacing);
-  }
   .start-0 {
     inset-inline-start: calc(var(--spacing) * 0);
-  }
-  .end {
-    inset-inline-end: var(--spacing);
   }
   .top-0 {
     top: calc(var(--spacing) * 0);
@@ -370,6 +363,9 @@
   .inline {
     display: inline;
   }
+  .inline-block {
+    display: inline-block;
+  }
   .inline-flex {
     display: inline-flex;
   }
@@ -413,7 +409,7 @@
     max-height: 100%;
   }
   .w-1\/2 {
-    width: calc(1 / 2 * 100%);
+    width: calc(1/2 * 100%);
   }
   .w-2\.5 {
     width: calc(var(--spacing) * 2.5);
@@ -1130,7 +1126,7 @@
   }
   .md\:w-1\/2 {
     @media (width >= 48rem) {
-      width: calc(1 / 2 * 100%);
+      width: calc(1/2 * 100%);
     }
   }
   .md\:w-auto {

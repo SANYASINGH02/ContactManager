@@ -17,6 +17,8 @@ public interface ContactRepo extends JpaRepository<Contact, String> {
     /* CUSTOM FINDER METHOD */
     // find the list of contacts by user -  this method we get bydefault bcz Contact entity has "user" field
     Page<Contact> findByUser(User user, Pageable pageable);
+    
+    List<Contact> findByUser(User user);
 
     // /* CUSTOM QUERY METHOD */
     // // This method can't be get by default bcz Contact entity doesn't have any "userId" field, so we need to write the logic
