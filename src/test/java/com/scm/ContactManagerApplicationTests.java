@@ -17,6 +17,6 @@ class ContactManagerApplicationTests {
 
 	@Test
 	public void emailSendTest(){
-		emailService.sendEmail("ssanyatwoz@gmail.com","test email","hello this is test email");
+		emailService.sendEmail("ssanyatwoz@gmail.com","test email: SCM","hello this is testing email to verify account");
 	}
 }
