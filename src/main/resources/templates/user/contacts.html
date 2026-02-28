@@ -81,10 +81,14 @@
                 </div>
               </form>
               <div>
-                <a href="/user/contacts/export" class="px-3 py-2 bg-green-800 text-white rounded inline-block">
+                <a href="/user/contacts/export" class="px-3 py-2 bg-green-700 text-white rounded inline-block">
                   Export All
                 </a>
               </div>
+              <form action="/user/contacts/import" method="post" enctype="multipart/form-data" class="inline">
+                <input type="file" name="file" accept=".xlsx" required class="mr-2 rounded-xl">
+                <button type="submit" class="px-3 py-2 bg-green-700 text-white rounded">Import Excel</button>
+              </form>
               </div>
 
 

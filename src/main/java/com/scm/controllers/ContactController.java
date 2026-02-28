@@ -23,10 +23,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.InputStream;
 import java.util.UUID;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @Controller
@@ -317,6 +320,64 @@ public class ContactController {
         response.setHeader("Content-Disposition", "attachment; filename=contacts.xlsx");
         workbook.write(response.getOutputStream());
         workbook.close();
+    }
+
+    // import contacts from Excel and add it to contacts list/table
+    @PostMapping("/import")
+    public String importContacts(
+            @RequestParam("file") MultipartFile file,
+            Authentication authentication,
+            HttpSession session
+    ) {
+        try {
+            String username = Helper.getEmailOfLoggedInUser(authentication);
+            User user = userService.getUserByEmail(username).orElse(null);
+
+            InputStream inputStream = file.getInputStream();
+            Workbook workbook = new XSSFWorkbook(inputStream);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            int count = 0;
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                if (row == null) continue;
+
+                Contact contact = new Contact();
+                contact.setName(getCellValue(row.getCell(0)));
+                contact.setEmail(getCellValue(row.getCell(1)));
+                contact.setPhoneNumber(getCellValue(row.getCell(2)));
+                contact.setAddress(getCellValue(row.getCell(3)));
+                contact.setDescription(getCellValue(row.getCell(4)));
+                contact.setWebsiteLink(getCellValue(row.getCell(5)));
+                contact.setLinkedinLink(getCellValue(row.getCell(6)));
+                contact.setUser(user);
+
+                contactService.save(contact);
+                count++;
+            }
+            workbook.close();
+
+            session.setAttribute("message", Message.builder()
+                    .content(count + " contacts imported successfully")
+                    .type(MessageType.green)
+                    .build());
+        } catch (Exception e) {
+            logger.error("Error importing contacts", e);
+            session.setAttribute("message", Message.builder()
+                    .content("Error importing contacts: " + e.getMessage())
+                    .type(MessageType.red)
+                    .build());
+        }
+        return "redirect:/user/contacts";
+    }
+
+    private String getCellValue(Cell cell) {
+        if (cell == null) return "";
+        return switch (cell.getCellType()) {
+            case STRING -> cell.getStringCellValue();
+            case NUMERIC -> String.valueOf((long) cell.getNumericCellValue());
+            default -> "";
+        };
     }
 
 }
