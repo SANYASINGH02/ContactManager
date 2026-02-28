@@ -17,8 +17,11 @@ public class EmailServiceImpl implements EmailService {
     private String domainName;
 
     @Override
-    public void sendEmail(String to, String subject, String body) {
-         SimpleMailMessage message = new SimpleMailMessage();
+    public void sendEmail(String to, String subject, String verificationLink) {
+
+        String body = "Click on the link to verify your email: " + verificationLink;
+
+        SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);

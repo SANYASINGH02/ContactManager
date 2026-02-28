@@ -112,11 +112,14 @@ public class PageController {
         user.setPassword(userForm.getPassword());
         user.setProfilePic("/Users/ssanyaa/Downloads/default-pfp.jpg");
 
-        User savedUser = userService.saveUser(user);
+        userService.saveUser(user);
         System.out.println("User saved");
 
         /** message = "Registration Successful" */
-        Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
+        Message message = Message.builder()
+                .content("Registration Successful<br>Account verification link is sent to your registered email")
+                .type(MessageType.green)
+                .build();
         // add the message
         session.setAttribute("message", message);
 

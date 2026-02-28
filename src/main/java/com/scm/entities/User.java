@@ -2,9 +2,7 @@ package com.scm.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +19,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,8 +54,11 @@ public class User implements UserDetails {
     // information---
     // private String gender;
     private boolean enabled = false;
-    private boolean emailVerified = true;
+    private boolean emailVerified = false;
     private boolean phoneVerified = false;
+
+    // token to verify email
+    private String emailToken;
 
     @Enumerated(value = EnumType.STRING)
     // SELF, GOOGLE, FACEBOOK, GITHUB, TWITTER, LINKEDIN

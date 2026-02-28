@@ -640,6 +640,9 @@
   .bg-gray-800 {
     background-color: var(--color-gray-800);
   }
+  .bg-gray-900 {
+    background-color: var(--color-gray-900);
+  }
   .bg-gray-900\/50 {
     background-color: color-mix(in srgb, oklch(21% 0.034 264.665) 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -654,6 +657,9 @@
   }
   .bg-green-700 {
     background-color: var(--color-green-700);
+  }
+  .bg-green-900 {
+    background-color: var(--color-green-900);
   }
   .bg-orange-800 {
     background-color: var(--color-orange-800);
@@ -1117,6 +1123,11 @@
   .md\:hidden {
     @media (width >= 48rem) {
       display: none;
+    }
+  }
+  .md\:w-1\/2 {
+    @media (width >= 48rem) {
+      width: calc(1 / 2 * 100%);
     }
   }
   .md\:w-auto {

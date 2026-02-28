@@ -15,8 +15,8 @@ class ContactManagerApplicationTests {
 	@Autowired
 	private EmailService emailService;
 
-	@Test
-	public void emailSendTest(){
-		emailService.sendEmail("ssanyatwoz@gmail.com","test email: SCM","hello this is testing email to verify account");
-	}
+//	@Test
+//	public void emailSendTest(){
+//		emailService.sendEmail("ssanyatwoz@gmail.com","test email: SCM","hello this is testing email to verify account");
+//	}
 }

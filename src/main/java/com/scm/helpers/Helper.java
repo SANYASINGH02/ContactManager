@@ -35,4 +35,8 @@ public class Helper {
             // return ((DefaultOAuth2User) authentication.getPrincipal()).getName();
         }
     }
+
+    public static String getLinkForEmailVerification(String emailToken) {
+        return "http://localhost:8081/auth/verify-email?token=" + emailToken;
+    }
 }
