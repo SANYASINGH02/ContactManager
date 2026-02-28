@@ -19,24 +19,22 @@
           <p class="text-center">List of your contacts</p>
 
           <div class="contacts_container p-5">
-            <!-- Entire table -->
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-
-              <div th:replace="~{message :: messagebox}"></div>
-
+            <div
+                    class="flex md:flex-row flex-col items-center px-4 justify-between bg-white dark:bg-gray-900"
+            >
               <form
-                data-th-object="${contactSearchForm}"
-                data-th-action="@{'/user/contacts/search'}"
+                      data-th-object="${contactSearchForm}"
+                      data-th-action="@{'/user/contacts/search'}"
               >
                 <!-- Search bar & select bar entire block/row of table-->
                 <div
-                  class="flex space-x-2 p-5 items-center flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900"
+                        class="flex space-x-2 p-5 items-center flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4"
                 >
                   <div>
                     <select
-                      data-th-field="*{field}"
-                      id="countries_disabled"
-                      class="block w-35 px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                            data-th-field="*{field}"
+                            id="countries_disabled"
+                            class="block w-35 px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
                     >
                       <option selected value="">Select a field</option>
                       <option value="name">Name</option>
@@ -48,41 +46,58 @@
                   <label class="sr-only">Search contact</label>
                   <div class="relative">
                     <div
-                      class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
+                            class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
                     >
                       <svg
-                        class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 20"
+                              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 20 20"
                       >
                         <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                         />
                       </svg>
                     </div>
                     <input
-                      data-th-field="*{value}"
-                      type="text"
-                      id="table-search-users"
-                      class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="Search for users"
+                            data-th-field="*{value}"
+                            type="text"
+                            id="table-search-users"
+                            class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Search for users"
                     />
                   </div>
                   <button
-                    type="submit"
-                    class="px-3 py-2 bg-gray-800 text-white rounded"
+                          type="submit"
+                          class="px-3 py-2 bg-gray-800 text-white rounded"
                   >
                     Search
                   </button>
                 </div>
               </form>
+              <div>
+                <button
+                        type="button"
+                        onclick="exportData()"
+                        class="px-3 py-2 bg-green-800 text-white rounded"
+                >
+                  Export
+                </button>
+              </div>
+              </div>
+
+
+            <!-- Entire contact table -->
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <div th:replace="~{message :: messagebox}"></div>
+
               <table
+                id="contact-table"
                 data-th-if="${contactsPage.totalElements>0}"
                 class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
               >
@@ -225,8 +240,20 @@
       </div>
     </div>
     <script data-th-src="@{'/js/contacts.js'}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>
     <script>
       console.log("Contact page");
+    </script>
+    <script>
+      console.log("exporting contacts...");
+      function exportData() {
+        TableToExcel.convert(document.getElementById("contact-table"), {
+          name: "contacts.xlsx",
+          sheet: {
+            name: "Sheet 1",
+          },
+        });
+      }
     </script>
   </body>
 </html>
