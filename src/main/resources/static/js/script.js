@@ -7,7 +7,22 @@ let currentTheme = getTheme();
 // call changeTheme() only when web page is loaded properly
 document.addEventListener("DOMContentLoaded", () => {
     changeTheme();
+    highlightActiveNavLink();
 });
+
+// Highlight active navigation link
+function highlightActiveNavLink() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        const linkPath = new URL(link.href).pathname;
+        if (linkPath === currentPath) {
+            link.classList.remove('text-gray-900');
+            link.classList.add('text-blue-700', 'md:text-blue-700', 'md:dark:text-blue-500');
+        }
+    });
+}
 
 // TODO:
 function changeTheme() {
