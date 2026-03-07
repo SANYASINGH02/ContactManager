@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.scm</groupId>
-	<artifactId>contactmanager</artifactId>
+	<artifactId>contacthub</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Contact Manager</name>
-	<description>Contact Manager Project</description>
+	<name>ContactHub</name>
+	<description>ContactHub Project</description>
 	<url/>
 	<licenses>
 		<license/>
