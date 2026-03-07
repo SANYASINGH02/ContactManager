@@ -1,6 +1,7 @@
 # ContactHub
 
 Key Features
+
 📇 Contact Management
 
 Add, Edit, Delete, and View contacts
@@ -14,6 +15,7 @@ Mark contacts as favorites
 Add social links (Website, LinkedIn)
 
 🔐 User Authentication & Security
+
 Secure user registration and login
 
 Email verification for new accounts
@@ -41,6 +43,7 @@ Import contacts from Excel files
 Bulk contact management
 
 ☁️ Cloud Storage
+
 Contact images stored on Cloudinary
 
 Secure and reliable cloud storage
